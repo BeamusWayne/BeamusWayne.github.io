@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beamus Wayne — Agent Engineer</title>
+<meta name="description" content="I build the trust layer for AI agents: reliability, verification, and provenance infrastructure." />
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-soft: #101318;
+    --card: #14181e;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.14);
+    --text: #e7eaee;
+    --muted: #9aa1ab;
+    --muted-dim: #6b7280;
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.12);
+    --amber: #fbbf24;
+    --blue: #60a5fa;
+    --cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC";
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, var(--cjk), monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, var(--cjk), sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(900px 500px at 80% -10%, rgba(74,222,128,0.06), transparent 60%),
+      radial-gradient(700px 500px at 0% 0%, rgba(96,165,250,0.05), transparent 55%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  /* i18n: English default, toggle to Chinese via <html class="lang-zh"> */
+  .zh { display: none; }
+  html.lang-zh .en { display: none; }
+  html.lang-zh .zh { display: inline; }
+  html.lang-zh body { line-height: 1.75; }
+
+  /* nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(10px);
+    background: rgba(11,13,16,0.7);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-weight: 650; letter-spacing: -0.01em; font-size: 16px; display: inline-flex; align-items: center; gap: 9px; }
+  .logo .mark { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px var(--green); }
+  .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; }
+  .nav-links a { color: var(--muted); transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .lang-btn {
+    font-family: var(--mono); font-size: 12.5px; color: var(--text);
+    background: var(--bg-soft); border: 1px solid var(--line); cursor: pointer;
+    padding: 6px 12px; border-radius: 7px; transition: all .15s; line-height: 1;
+  }
+  .lang-btn:hover { border-color: var(--green); color: var(--green); }
+
+  /* hero */
+  header.hero { padding: 90px 0 70px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 13px; color: var(--green);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 22px;
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4.1rem);
+    line-height: 1.05; letter-spacing: -0.03em; font-weight: 680;
+    margin-bottom: 24px; max-width: 16ch;
+  }
+  html.lang-zh h1 { line-height: 1.18; letter-spacing: -0.01em; max-width: none; white-space: nowrap; }
+  .nobreak { white-space: nowrap; }  /* 让「信任层。」窄屏折行时作为整体不被拆开 */
+  h1 .accent { color: var(--green); }
+  .lede { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--muted); max-width: 60ch; margin-bottom: 36px; }
+  .cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-size: 14.5px; font-weight: 550; padding: 11px 20px; border-radius: 9px;
+    border: 1px solid var(--line-strong); transition: all .15s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn.primary { background: var(--green); color: #06250f; border-color: var(--green); }
+  .btn.primary:hover { background: #6ee79b; }
+  .btn.ghost { color: var(--text); }
+  .btn.ghost:hover { background: var(--bg-soft); border-color: var(--muted-dim); }
+
+  /* hero terminal flourish */
+  .terminal {
+    margin-top: 50px; background: #0c0f13; border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden; max-width: 540px;
+    box-shadow: 0 24px 60px -30px rgba(0,0,0,0.8);
+  }
+  .terminal .bar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .terminal .bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .terminal .bar i:nth-child(1){ background:#ff5f57; } .terminal .bar i:nth-child(2){ background:#febc2e; } .terminal .bar i:nth-child(3){ background:#28c840; }
+  .terminal pre { font-family: var(--mono); font-size: 13px; line-height: 1.85; padding: 18px 18px 20px; color: var(--muted); overflow-x: auto; white-space: pre; }
+  .terminal .p { color: var(--green); } .terminal .ok { color: var(--green); } .terminal .dim { color: var(--muted-dim); } .terminal .w { color: var(--text); }
+
+  /* section */
+  .sec { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .sec-label { font-family: var(--mono); font-size: 12.5px; color: var(--muted-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; font-weight: 640; margin-bottom: 14px; }
+
+  /* thesis */
+  .thesis p { color: var(--muted); max-width: 64ch; font-size: 1.05rem; }
+  .pills { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .pill { font-family: var(--mono); font-size: 13px; color: var(--text); background: var(--bg-soft); border: 1px solid var(--line); padding: 8px 14px; border-radius: 100px; }
+  .pill b { color: var(--green); }
+
+  /* projects */
+  .cards { display: grid; gap: 18px; margin-top: 30px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px 26px 24px; transition: border-color .15s, transform .15s; }
+  .card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+  .card h3 { font-family: var(--mono); font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+  .badge { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge.live { color: var(--green); background: var(--green-dim); border: 1px solid rgba(74,222,128,0.3); }
+  .badge.live .dot { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .badge.private { color: var(--amber); background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.28); }
+  .badge.private .dot { background: var(--amber); }
+  .badge.wip { color: var(--blue); background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.28); }
+  .badge.wip .dot { background: var(--blue); }
+  .card .one { font-size: 1.02rem; color: var(--text); margin-bottom: 10px; }
+  .card .insight { font-size: 0.95rem; color: var(--muted); margin-bottom: 18px; }
+  .card .insight b { color: var(--text); font-weight: 600; }
+  .card-bot { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: var(--mono); font-size: 11.5px; color: var(--muted); border: 1px solid var(--line); padding: 4px 9px; border-radius: 6px; }
+  .card-link { font-family: var(--mono); font-size: 13px; color: var(--green); display: inline-flex; align-items: center; gap: 6px; }
+  .card-link.muted { color: var(--muted-dim); }
+  .card-link:hover { text-decoration: underline; }
+
+  /* about */
+  .about p { color: var(--muted); max-width: 64ch; font-size: 1.05rem; margin-bottom: 14px; }
+  .about .status { font-family: var(--mono); font-size: 14px; color: var(--green); display: inline-flex; align-items: center; gap: 9px; margin-top: 8px; }
+  .about .status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+  .contact { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+  .contact a { font-family: var(--mono); font-size: 14px; color: var(--text); border: 1px solid var(--line); padding: 11px 18px; border-radius: 9px; transition: all .15s; }
+  .contact a:hover { border-color: var(--green); color: var(--green); }
+
+  footer { padding: 36px 0 60px; }
+  footer .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer .muted { color: var(--muted-dim); font-size: 13px; font-family: var(--mono); }
+
+  @media (max-width: 600px) {
+    header.hero { padding: 64px 0 50px; }
+    .sec { padding: 56px 0; }
+    .nav-links { gap: 14px; }
+    .nav-links a.hide-sm { display: none; }
+    html.lang-zh h1 { white-space: normal; }  /* 窄屏回退:允许换行,避免横向溢出 */
+  }
+</style>
+<script>try{ if(localStorage.getItem('lang')==='zh') document.documentElement.classList.add('lang-zh'); }catch(e){}</script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="mark"></span> Beamus Wayne</div>
+    <div class="nav-links">
+      <a href="#work"><span class="en">Work</span><span class="zh">作品</span></a>
+      <a href="#about" class="hide-sm"><span class="en">About</span><span class="zh">关于</span></a>
+      <a href="https://github.com/BeamusWayne" target="_blank" rel="noopener">GitHub</a>
+      <button id="langToggle" class="lang-btn" onclick="__toggleLang()">中文</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> <span class="en">Agent Engineer</span><span class="zh">Agent 工程师</span></span>
+    <h1>
+      <span class="en">I build the <span class="accent">trust layer</span> for AI agents.</span>
+      <span class="zh">我为 AI agent 构建<span class="nobreak"><span class="accent">信任层</span>。</span></span>
+    </h1>
+    <p class="lede">
+      <span class="en">As agents move from demos to unsupervised work, the bottleneck shifts from <em>can it do the task</em> to <em>can you trust it to</em>. I build the reliability, verification, and provenance infrastructure that makes autonomous agents safe to ship.</span>
+      <span class="zh">当 agent 从 demo 走向无人值守的真实工作,瓶颈就从「它能不能做」变成「你敢不敢信它做」。我构建让自主 agent 能放心上线的可靠性、验证与溯源基础设施。</span>
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="#work"><span class="en">View work →</span><span class="zh">查看作品 →</span></a>
+      <a class="btn ghost" href="https://github.com/BeamusWayne" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <div class="terminal" aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <pre><span class="p">$</span> <span class="w">trace-vault replay</span> agent-run.json
+<span class="ok">✓</span> <span class="dim">142 steps replayed, byte-identical</span>
+<span class="ok">✓</span> faithfulness check: <span class="ok">PASS</span> <span class="dim">(determinism ≠ faithfulness)</span>
+<span class="ok">✓</span> proof receipt: <span class="dim">sha256:9f3c…a1  signed</span>
+<span class="p">$</span> <span class="dim">_</span></pre>
+    </div>
+  </div>
+</header>
+
+<section class="sec thesis">
+  <div class="wrap">
+    <div class="sec-label"><span class="en">The through-line</span><span class="zh">主线</span></div>
+    <h2><span class="en">One bet, three angles.</span><span class="zh">一个赌注,三个切面。</span></h2>
+    <p>
+      <span class="en">Software taught us that capability comes first, then testing, monitoring, and CI become mandatory infrastructure. AI agents are walking the same path. My work sits in that emerging trust layer — the picks and shovels of the agent economy.</span>
+      <span class="zh">软件的规律是:能力先到,然后测试、监控、CI 成为强制基建。AI agent 正在重走这条路。我的工作就处在这层正在形成的信任基建里——agent 经济的铲子。</span>
+    </p>
+    <div class="pills">
+      <span class="pill"><b>01</b> &nbsp;<span class="en">Reliability</span><span class="zh">可靠性</span></span>
+      <span class="pill"><b>02</b> &nbsp;<span class="en">Verification</span><span class="zh">验证</span></span>
+      <span class="pill"><b>03</b> &nbsp;<span class="en">Provenance</span><span class="zh">溯源</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-label"><span class="en">Selected work</span><span class="zh">精选作品</span></div>
+    <h2><span class="en">Projects</span><span class="zh">项目</span></h2>
+    <div class="cards">
+
+      <!-- trace-vault -->
+      <div class="card">
+        <div class="card-top">
+          <h3>trace-vault</h3>
+          <span class="badge live"><span class="dot"></span> <span class="en">LIVE</span><span class="zh">已上线</span></span>
+        </div>
+        <div class="one"><span class="en">Snapshot testing &amp; replay for AI agents — CI for non-deterministic systems.</span><span class="zh">AI agent 的快照测试与重放——给非确定性系统做 CI。</span></div>
+        <div class="insight"><span class="en">Records real agent runs and replays them to catch silent regressions when a prompt or model changes. Built on one core insight: <b>determinism ≠ faithfulness</b> — a reproducible run isn't a correct one.</span><span class="zh">录制真实 agent 运行并重放,在改了 prompt 或模型后抓出悄悄发生的回归。核心洞见:<b>determinism ≠ faithfulness</b>——可复现 ≠ 正确。</span></div>
+        <div class="card-bot">
+          <div class="tags"><span class="tag"><span class="en">record / replay</span><span class="zh">录制 / 重放</span></span><span class="tag"><span class="en">regression</span><span class="zh">回归测试</span></span><span class="tag"><span class="en">eval</span><span class="zh">评测</span></span></div>
+          <a class="card-link" href="https://github.com/BeamusWayne/trace-vault" target="_blank" rel="noopener"><span class="en">View on GitHub →</span><span class="zh">在 GitHub 查看 →</span></a>
+        </div>
+      </div>
+
+      <!-- provenant -->
+      <div class="card">
+        <div class="card-top">
+          <h3>provenant</h3>
+          <span class="badge live"><span class="dot"></span> <span class="en">LIVE</span><span class="zh">已上线</span></span>
+        </div>
+        <div class="one"><span class="en">Glass-box bill-auditing agent with verifiable, tamper-proof results.</span><span class="zh">玻璃盒账单审计 agent,结果可验证、防篡改。</span></div>
+        <div class="insight"><span class="en">The LLM is <b>forbidden from doing arithmetic</b> — all math runs in deterministic code — and every conclusion ships with an <b>HMAC-signed Proof Receipt</b>. 93 tests, mypy-strict, BillAudit-Bench 100%, React cockpit, Docker/CI.</span><span class="zh"><b>禁止 LLM 做算术</b>——所有计算交给确定性代码——每个结论都附一张 <b>HMAC 签名的 Proof Receipt</b>。93 个测试、mypy-strict、BillAudit-Bench 100%、React 控制台、Docker/CI。</span></div>
+        <div class="card-bot">
+          <div class="tags"><span class="tag">Python</span><span class="tag">React</span><span class="tag">mypy-strict</span><span class="tag"><span class="en">HMAC receipts</span><span class="zh">HMAC 收据</span></span></div>
+          <a class="card-link" href="https://github.com/BeamusWayne/provenant" target="_blank" rel="noopener"><span class="en">View on GitHub →</span><span class="zh">在 GitHub 查看 →</span></a>
+        </div>
+      </div>
+
+      <!-- alfred -->
+      <div class="card">
+        <div class="card-top">
+          <h3>alfred</h3>
+          <span class="badge wip"><span class="dot"></span> <span class="en">WIP / BETA</span><span class="zh">开发中</span></span>
+        </div>
+        <div class="one"><span class="en">A verifiable autonomous coding agent in your terminal.</span><span class="zh">终端里的可验证自主编码 agent。</span></div>
+        <div class="insight"><span class="en">A Claude-Code-style CLI coding agent built in TypeScript / Bun, with a code-grounded comparison against Codex, Gemini CLI, and Claude Code. Positioned around verifiable, auditable autonomy rather than raw capability.</span><span class="zh">用 TypeScript / Bun 写的 Claude Code 式 CLI 编码 agent,附一份对 Codex、Gemini CLI、Claude Code 的代码级对比评测。定位是可验证、可审计的自主性,而非单纯堆能力。</span></div>
+        <div class="card-bot">
+          <div class="tags"><span class="tag">TypeScript</span><span class="tag">Bun</span><span class="tag">CLI agent</span></div>
+          <span class="card-link muted"><span class="en">Private beta</span><span class="zh">内测中</span></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="wrap">
+    <div class="sec-label"><span class="en">About</span><span class="zh">关于</span></div>
+    <h2><span class="en">Hi, I'm Beamus.</span><span class="zh">你好,我是 Beamus。</span></h2>
+    <p>
+      <span class="en">I'm an agent engineer focused on what happens after the demo works: making AI agents reliable, verifiable, and trustworthy enough to run without a human watching. I like the unglamorous infrastructure — replay harnesses, proof receipts, eval gates — that turns a clever prototype into something you can actually depend on.</span>
+      <span class="zh">我是一名 agent 工程师,专注于「demo 跑通之后」的事:让 AI agent 足够可靠、可验证、可信,能在没人盯着的情况下运行。我喜欢那些不性感的基础设施——重放框架、证明收据、评测门禁——正是它们把一个聪明的原型,变成真正能依赖的东西。</span>
+    </p>
+    <div class="status"><span class="dot"></span> <span class="en">Open to Agent Engineer roles</span><span class="zh">正在寻找 Agent 工程师机会</span></div>
+    <div class="contact">
+      <a href="https://github.com/BeamusWayne" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="mailto:fgotbe@gmail.com">Email ↗</a>
+      <!-- <a href="/resume.pdf" target="_blank">Résumé ↗</a> -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="muted">© 2026 Beamus Wayne</span>
+    <span class="muted"><span class="en">Built for the agent trust layer.</span><span class="zh">为 AI agent 信任层而建。</span></span>
+  </div>
+</footer>
+
+<script>
+  function __toggleLang(){
+    var zh = document.documentElement.classList.toggle('lang-zh');
+    document.documentElement.lang = zh ? 'zh-CN' : 'en';
+    var btn = document.getElementById('langToggle');
+    if (btn) btn.textContent = zh ? 'EN' : '中文';
+    try { localStorage.setItem('lang', zh ? 'zh' : 'en'); } catch(e){}
+  }
+  // sync button label + lang attr on load (respects saved preference)
+  (function(){
+    var zh = document.documentElement.classList.contains('lang-zh');
+    document.documentElement.lang = zh ? 'zh-CN' : 'en';
+    var btn = document.getElementById('langToggle');
+    if (btn) btn.textContent = zh ? 'EN' : '中文';
+  })();
+</script>
+
+</body>
+</html>
